@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block body %} 
+    <!-- bradcam_area  -->
+    <div class="bradcam_area bradcam_bg_1">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="bradcam_text">
+                        <h3>Your Profile</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ bradcam_area  -->
+
+    <div class="job_details_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="job_sumary">
+                        <div class="summery_header">
+                            <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+    <h3>Profile Summary</h3>
+    {% if profile.image %}
+    <img src="{{ profile.image.url }}" style="max-width: 100px; border-radius: 50%;">
+    {% endif %}
+</div>
+
+                        </div>
+                        <div class="job_content">
+                            <ul>
+                                <li>Name: <span>{{profile}}</span></li>
+                                <li>Email: <span>{{profile.user.email}}</span></li>
+                                <li>Phone: <span>{{profile.phone_number}}</span></li>
+                                <li>Address: <span>{{profile.city}}</span></li>
+
+                            </ul>
+                            
+                        </div>
+                        <div class="p-5">
+                            <a class="boxed-btn3 w-100" href="{% url 'accounts:editprofile' %}"> Edit Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock body %}
+

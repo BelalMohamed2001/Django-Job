@@ -1,17 +1,23 @@
 from django.shortcuts import redirect, render
 from django.core.paginator import Paginator
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
+from job.filters import ProductFilter
 from job.form import ApplyForm ,AddJob
 from .models import Job
 def job_list(request):
     job=Job.objects.all()
+    ## filters
+    filter = ProductFilter(request.GET, queryset=job)
+    job=filter.qs
     paginator = Paginator(job, 2) 
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     
     context ={
-        'job':page_obj
+        'job':page_obj,
+        'filter':filter
 
     }
     return render(request,'job/joblist.html',context)
@@ -34,7 +40,7 @@ def job_detail(request,slug):
     }
     return render(request,'job/jobdetails.html',context)
 
-
+@login_required
 def add_job(request):
   
     if request.method=="POST":
